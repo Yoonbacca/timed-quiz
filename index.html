@@ -8,17 +8,20 @@
     <title>Timed Quiz</title>
 </head>
 <body>
-    <header>
-        <p id="highscore">View Highscores</p>
-        <p id="countdown">Time: </p>
+
+    <header id="nav">
+        <!-- Clicking score element will change page to leaderboard-->
+        <p id="score">View Highscores</p>
+        <p id="timer"></p>
     </header>
-    <main>
+    <main id="main">
         <div class="flex-container">
-            <h1 class="flex-item question">Coding Quiz Challenge</h1>
-            <ol class="flex-item list">
+            <h1 id="header" data-type="title">Coding Quiz Challenge</h1>
+            <ol data-state="hidden">
             </ol>
-            <button>Start Quiz</button>
+            <button id="start">Start Quiz</button>
         </div>
     </main>
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>

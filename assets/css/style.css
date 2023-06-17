@@ -54,9 +54,9 @@ p {
     font-size: 1rem;
   }
 
-  /* HEADER */
+  /* NAVBAR */
 
-header {
+#nav {
     display: flex;
     justify-content: space-between;
     /* Fix header to stay fixed at the top */
@@ -66,6 +66,13 @@ header {
     left: 0;
     /* Sets nav bar to top layer of website */
     z-index: 9999;
+    background-color: #000000;
+    color: white;
+    padding: 0.5rem;
+}
+
+#timer {
+    padding-right: 1rem;
 }
 
 main {
@@ -85,17 +92,26 @@ main {
 
 }
 
+/* Button properties from https://www.w3schools.com/howto/howto_css_animate_buttons.asp */
 button {
-    color: var(--bg-color);
-    background-color: var(--dark-blue);
-    padding: 0.25rem 1rem 0.25rem 1rem;
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    border: 0;
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
     border-radius: 15px;
+    box-shadow: 0 9px #999;
 }
 
 button:hover {
-    background-color:var(--light-blue);
-    transition: 0.7s;
+    background-color: #3e8e41
 }
+
+button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
