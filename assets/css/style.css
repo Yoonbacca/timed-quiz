@@ -74,6 +74,7 @@ p {
 #score:hover {
     text-decoration: underline;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #timer {
@@ -91,10 +92,6 @@ main {
 
 .flex-container {
     width: auto;
-}
-
-.flex-item {
-
 }
 
 /* Button properties from https://www.w3schools.com/howto/howto_css_animate_buttons.asp */
