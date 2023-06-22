@@ -31,9 +31,12 @@ let correctAnswer = [2, 5, 2, 50, 1];
 // Score variable to be stored later
 let score = 0;
 
+// Global time variable
+let timeLeft = 60;
+
 // Countdown function to run every 1000 milliseconds
 function countdown() {
-  let timeLeft = 60;
+
   let timeInterval = setInterval(function () {
     timeLeft--;
     timerEl.textContent = "Time: " + timeLeft;
@@ -82,7 +85,14 @@ function populateChoices() {
     
     choiceEl.addEventListener("click", function(event) {
       buttonText = event.target.textContent;
+
+      // If selected button does not equal the correct answer, then subtract 10 sec
+      if (buttonText !== correctAnswer[i]) {
+        timeLeft = timeLeft - 10;
+      }
+
       nextQuestion();
+
     });
   }
 }
@@ -102,3 +112,4 @@ function nextQuestion() {
     removeButtons();
   }
 }
+
