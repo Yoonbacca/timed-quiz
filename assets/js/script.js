@@ -53,6 +53,9 @@ function countdown() {
 //Event Listener that starts function when clicked
 buttonEl.addEventListener("click", quizStart);
 
+
+scoreEl.addEventListener("click", scoreBoard);
+
 // Quiz start will start countdown, populate a question, then populate choices
 function quizStart() {
   countdown();
