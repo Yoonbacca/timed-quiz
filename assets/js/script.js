@@ -32,7 +32,7 @@ let correctAnswer = [2, 5, 2, 50, 1];
 let score = 0;
 
 // Global time variable
-let timeLeft = 60;
+let timeLeft = 10;
 
 // Countdown function to run every 1000 milliseconds
 function countdown() {
@@ -41,16 +41,16 @@ function countdown() {
     timeLeft--;
     timerEl.textContent = "Time: " + timeLeft;
 
-    if(timeLeft === 0) {
+    if(timeLeft < 1) {
       // Stops execution of action at set interval
       clearInterval(timeInterval);
       timerEl.textContent = "DONE";
-      // Calls function to create and append image
+      gameOver();
     } 
   }, 1000);
 }
 
-//Event Listener that starts function when clicked
+// Event Listener that starts function when clicked
 buttonEl.addEventListener("click", quizStart);
 
 // Quiz start will start countdown, populate a question, then populate choices
@@ -64,43 +64,49 @@ function quizStart() {
 // Replaces Header Element text content
 function populateQuestion() {
   headerEl.textContent = question[0];
+  if (answer.length === 0) {
+    gameOver();
+  }
+}
+
+// Game Over function
+function gameOver() {
+    headerEl.textContent = "GAME OVER"
+    removeButtons();
+    score = score + timeLeft;
 }
 
 function removeButtons() {
   let element = document.querySelectorAll("li");
-  for (var i = 0; i < answer[0].length; i++) {
+  for (var i = 0; i < 4; i++) {
     if (element[i].firstChild) {
       element[i].removeChild(element[i].firstChild);
     }
   }
 }
 
+
 function populateChoices() {
   removeButtons();
-  for (var i = 0; i < answer[0].length; i++) {
+  for (var i = 0; i < 4; i++) {
     let choiceEl = document.createElement("button");
     choiceEl.textContent = answer[0][i];
     liEl[i].appendChild(choiceEl);
-
-    
     choiceEl.addEventListener("click", function(event) {
       buttonText = event.target.textContent;
-
-      // If selected button does not equal the correct answer, then subtract 10 sec
-      if (buttonText !== correctAnswer[i]) {
-        timeLeft = timeLeft - 10;
-      }
-
       nextQuestion();
-
     });
   }
 }
 
 function nextQuestion() {
   if (buttonText == correctAnswer[0]) {
-    score++;
-  } 
+    score = score + 5;
+    console.log(score);
+  } else {
+    score = score - 5;
+    console.log(score);
+  }
   if (question.length !== 0) {
     question.shift();
     answer.shift();
@@ -110,6 +116,6 @@ function nextQuestion() {
     console.log(answer)
   } else {
     removeButtons();
+    headerEl.textContent = "GAME OVER!"
   }
 }
-
