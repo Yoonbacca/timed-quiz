@@ -1,4 +1,4 @@
-// Change header, list, and countdown elements after clicking button
+/// Change header, list, and countdown elements after clicking button
 let mainEl = document.getElementById('main');
 let navEl = document.getElementById('nav');
 let scoreEl = document.getElementById('score');
