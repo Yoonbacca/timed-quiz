@@ -34,6 +34,22 @@ let score = 0;
 // Global time variable
 let timeLeft = 60;
 
+// High Score Variables
+let highScores = [];
+init();
+
+// This function is being called below and will run when the page loads.
+function init() {
+  // Get stored todos from localStorage
+  var storedHighScores = JSON.parse(localStorage.getItem("highScores"));
+  console.log(storedHighScores);
+  // If todos were retrieved from localStorage, update the todos array to it
+  if (storedHighScores !== null) {
+    highScores = storedHighScores;
+  }
+
+}
+
 // Countdown function to run every 1000 milliseconds
 function countdown() {
 
@@ -53,12 +69,6 @@ function countdown() {
 
 // Event Listener that starts function when clicked
 buttonEl.addEventListener("click", quizStart);
-
-// Event Listener that populates the scoreboard
-scoreEl.addEventListener("click", function() {
-  console.log("butt")
-  alert("Here are the High scores:" + localStorage.getItem("user"));
-});
 
 // Quiz start will start countdown, populate a question, then populate choices
 function quizStart() {
@@ -130,41 +140,25 @@ function createForm() {
   scoreForm.setAttribute("id", "myForm");
   listEl.appendChild(scoreForm);
 
-  let initialInput = document.createElement("input");
-  initialInput.setAttribute("type", "text");
-  initialInput.setAttribute("value", "Initials");
-  document.getElementById("myForm").appendChild(initialInput);
-
   let submitButton = document.createElement("button");
   submitButton.textContent = "Submit";
   document.getElementById("myForm").appendChild(submitButton);
-  submitButton.addEventListener("click", function(event) {
-    // create user object from submission
-    let user = {
-      initials: initialInput.value.trim(),
-      points: score
-    };
-  
-    // set new submission to local storage 
-    localStorage.setItem("user", JSON.stringify(user));
+  submitButton.addEventListener("click", saveHighScore(score));
+    // set new submission to local storage
+  };
 
-  });
-}
-console.log(localStorage);
 
-function saveHighScore(score, highScores) {
-  const name = prompt('You got a highscore! Enter name:');
-  const newScore = { score, name };
-  
-  // 1. Add to list
-  highScores.push(newScore);
 
-  // 2. Sort the list
-  highScores.sort((a, b) => b.score - a.score);
-  
-  // 3. Select new list
-  highScores.splice(NO_OF_HIGH_SCORES);
-  
-  // 4. Save to local storage
-  localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
-};
+
+  function saveHighScore(score) {
+    const name = prompt('Save your score! Enter name:');
+    const newScore = { name, score };
+    highScores.push(newScore);
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+  };
+
+// Event Listener that populates the scoreboard
+scoreEl.addEventListener("click", function() {
+  let highScoresString = JSON.stringify(highScores);
+  alert(highScoresString);
+});
