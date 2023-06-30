@@ -10,7 +10,6 @@ let answerEl = document.getElementById('answer');
 let buttonEl = document.getElementById("start");
 let liEl = document.querySelectorAll("li");
 
-
 // Array that contains all possible questions
 let question = ["1+1?",
               "How many fingers on a hand?",
@@ -36,12 +35,11 @@ let timeLeft = 60;
 
 // High Score Variables
 let highScores = [];
-init();
+let storedHighScores = JSON.parse(localStorage.getItem("highScores"))
 
 // This function is being called below and will run when the page loads.
 function init() {
   // Get stored todos from localStorage
-  var storedHighScores = JSON.parse(localStorage.getItem("highScores"));
   console.log(storedHighScores);
   // If todos were retrieved from localStorage, update the todos array to it
   if (storedHighScores !== null) {
@@ -127,11 +125,11 @@ function nextQuestion() {
   }
 }
 
-// Game Over function
 function gameOver() {
   headerEl.textContent = "GAME OVER"
   score = score + timeLeft;
-  listEl.textContent = "Your Score is: " + score;
+  listEl.textContent = "Submit your score to finish the quiz! Your Score is: " + score;
+  timeLeft = 0;
   createForm();
 }
 
@@ -140,25 +138,47 @@ function createForm() {
   scoreForm.setAttribute("id", "myForm");
   listEl.appendChild(scoreForm);
 
+  let userInput = document.createElement("input");
+  userInput.setAttribute("id", "myInput");
+  document.getElementById("myForm").appendChild(userInput);
+
   let submitButton = document.createElement("button");
   submitButton.textContent = "Submit";
   document.getElementById("myForm").appendChild(submitButton);
-  submitButton.addEventListener("click", saveHighScore(score));
+  scoreForm.addEventListener("submit", function(event){
+    event.preventDefault()
+    saveHighScore(document.getElementById("myInput").value, score);
+  });
     // set new submission to local storage
   };
 
-
-
-
-  function saveHighScore(score) {
-    const name = prompt('Save your score! Enter name:');
+  function saveHighScore(name, score) {
     const newScore = { name, score };
+    console.log(newScore);
     highScores.push(newScore);
     localStorage.setItem("highScores", JSON.stringify(highScores));
   };
 
 // Event Listener that populates the scoreboard
 scoreEl.addEventListener("click", function() {
-  let highScoresString = JSON.stringify(highScores);
-  alert(highScoresString);
+  if (!timeEnd()) {
+    alert("Finish the quiz first! You got this!");
+  } else {
+    containerEl.removeChild(start);
+    removeButtons();
+    headerEl.textContent = "High Scores";
+    for (let i = 0; i < 5; i++) {
+      listEl.children[i].textContent = storedHighScores[i].name + "     - - -     " + storedHighScores[i].score;
+    }
+  }
 });
+
+function timeEnd() {
+  if (timeLeft !== 60) {
+    return false;
+  } else {
+    return true;
+  }
+}
+console.log(listEl.childElementCount);
+init();

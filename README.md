@@ -6,7 +6,7 @@
 ## Links
 GitHub: https://github.com/Yoonbacca/timed-quiz
 
-Live Page: https://yoonbacca.github.io/quiz
+Live Page: https://yoonbacca.github.io/timed-quiz
 
 ## Description
 This is a timed quiz website built entirely using the JS and the DOM. The purpose of this project was to practice different methods of navigating the DOM while also using localStorage to store data on the browser's memory.
